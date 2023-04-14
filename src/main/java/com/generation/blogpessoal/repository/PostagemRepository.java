@@ -9,8 +9,9 @@ import com.generation.blogpessoal.model.Postagem;
 
 
 public interface PostagemRepository extends JpaRepository<Postagem, Long>{
-
-	List<Postagem> findAllByTituloContainingIgnoreCase(@Param("titulo")String titulo);
 	
-	//no SQL: SELECT * FROM tb_postagens WHERE titulo LIKE "%????%";
+	//consulta,colletciton lista armazena postagem, containig = like %f%, ignorecase= ignorar letras minusculas ou maiusculas
+	  List<Postagem> findAllByTituloContainingIgnoreCase(@Param("titulo")String Titulo);
+	    //no SQL: SELECT * FROM tb_postagens WHERE titulo LIKE "texto que quero encontrar";
+	
 }
