@@ -7,6 +7,11 @@ import org.springframework.data.repository.query.Param;
 
 import com.generation.blogpessoal.model.Postagem;
 
+<<<<<<< HEAD
+=======
+@Repository
+public interface PostagemRepository extends JpaRepository<Postagem, Long>{
+>>>>>>> 0609cded9ecba5a8f824016c8f94fc2fda256d6a
 
 public interface PostagemRepository extends JpaRepository<Postagem, Long>{
 	
