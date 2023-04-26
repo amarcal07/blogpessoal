@@ -57,14 +57,16 @@ public class PostagemController {
 
 	@PostMapping
 	public ResponseEntity<Postagem> post(@Valid @RequestBody Postagem postagem) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(postagemRepository.save(postagem));
-		// No SQL: INSERT INTO tb_postagens(data, titulo, texto) VALUES(?, ?, ?,)
-
+		return temaRepository.findById(postagem.getTema().getId())
+				.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(postagemRepository.save(postagem))) 
+			      .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());	
+		// No SQL: INSERT INTO tb_postagens(data, titulo, texto) VALUES(?, ?, ?
 	}
 
+	
 	@PutMapping
 	public ResponseEntity<Postagem> put(@Valid @RequestBody Postagem postagem) {
-		return postagemRepository.findById(postagem.getId())
+		return temaRepository.findById(postagem.getId())
 				.map(resposta -> ResponseEntity.ok().body(postagemRepository.save(postagem)))
 				.orElse(ResponseEntity.notFound().build());
 	}
@@ -77,15 +79,5 @@ public class PostagemController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		postagemRepository.deleteById(id);
 		// No SQL: DELETE FROM tb_postagens WHERE id = id
-
 	}
-
-	public TemaRepository getTemaRepository() {
-		return temaRepository;
-	}
-
-	public void setTemaRepository(TemaRepository temaRepository) {
-		this.temaRepository = temaRepository;
-	}
-
 }
